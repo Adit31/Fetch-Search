@@ -28,7 +28,6 @@ categories_df.rename(columns={'PRODUCT_CATEGORY': "CATEGORY"}, inplace=True)
 
 brand_categories_df = brand_category_df.merge(categories_df, on = 'CATEGORY', how = 'left')
 
-# es = Elasticsearch("http://172.19.176.1:9200")
 es = Elasticsearch(
   "https://d4e658413dda45e0abf84a436aa46b0d.us-central1.gcp.cloud.es.io:443",
   api_key="b1AxN1VJc0JrT3VYSkxwa3RURE06dk5JRS1hR2JUY2ViVFlBc1kySlppUQ=="
@@ -44,7 +43,7 @@ mappings = {
     }
 
 try:
-    es.indices.create(index="products", mappings=mappings)
+    es.indices.create(index="search-products", mappings=mappings)
     for i, row in brand_categories_df.iterrows():
         doc = {
             "BRAND": row["BRAND"],
@@ -52,10 +51,10 @@ try:
             "IS_CHILD_CATEGORY_TO": row["IS_CHILD_CATEGORY_TO"],
         }
 
-        es.index(index="products", id=i, document=doc)
+        es.index(index="search-products", id=i, document=doc)
 
-    es.indices.refresh(index="products")
-    es.cat.count(index="products", format="json")
+    es.indices.refresh(index="search-products")
+    es.cat.count(index="search-products", format="json")
     
 except exceptions.RequestError as ex:
     if ex.error == 'resource_already_exists_exception':
@@ -73,7 +72,7 @@ mappings = {
 }
 
 try:
-    es.indices.create(index="offers", mappings=mappings)
+    es.indices.create(index="search-offers", mappings=mappings)
     for i, row in offer_retailer_df.iterrows():
         doc = {
             "OFFER": row["OFFER"],
@@ -81,10 +80,10 @@ try:
             "BRAND": row["BRAND"]
         }
 
-        es.index(index="offers", id=i, document=doc)
+        es.index(index="search-offers", id=i, document=doc)
 
-    es.indices.refresh(index="offers")
-    es.cat.count(index="offers", format="json")
+    es.indices.refresh(index="search-offers")
+    es.cat.count(index="search-offers", format="json")
     
 except exceptions.RequestError as ex:
     if ex.error == 'resource_already_exists_exception':
@@ -111,7 +110,7 @@ words = search_query_best.split()
 search_query_prefix = '* '.join(words) + "*"
 
 resp = es.search(
-    index="offers",
+    index="search-offers",
     query={
             "bool": 
             {
@@ -142,7 +141,7 @@ valid_entries = []
 for entry in resp['hits']['hits']:
     brand = entry['_source']['BRAND']
     resp1 = es.search(
-        index="products",
+        index="search-products",
         query={
                 "bool": 
                 {
