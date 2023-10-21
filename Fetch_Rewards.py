@@ -166,3 +166,4 @@ for i, entry in enumerate(valid_entries):
     st.write("Available at", entry["_source"]["RETAILER"])
     st.write("From ", entry["_source"]["BRAND"])
     st.write("With similarity score of ", entry["_score"])
+    st.write("-------------------------------------------)
