@@ -11,9 +11,9 @@ nltk.download('wordnet')
 nltk.download('punkt')
 nltk.download('stopwords')
 
-brand_category_df = pd.read_csv("C://Users//aditg//Downloads//DS_NLP_search_data//brand_category.csv")
-categories_df = pd.read_csv("C://Users//aditg//Downloads//DS_NLP_search_data//categories.csv")
-offer_retailer_df = pd.read_csv("C://Users//aditg//Downloads//DS_NLP_search_data//offer_retailer.csv")
+brand_category_df = pd.read_csv("data/brand_category.csv")
+categories_df = pd.read_csv("data/categories.csv")
+offer_retailer_df = pd.read_csv("data/offer_retailer.csv")
 
 brand_category_df.dropna(inplace=True)
 brand_category_df.reset_index(drop=True, inplace=True)
