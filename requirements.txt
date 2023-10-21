@@ -42,7 +42,6 @@ pydantic==2.4.2
 pydantic_core==2.10.1
 pydeck==0.8.1b0
 pytz==2023.3.post1
-pywin32==305.1
 PyYAML==6.0.1
 referencing==0.30.2
 regex==2023.10.3
