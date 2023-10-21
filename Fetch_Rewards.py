@@ -29,7 +29,6 @@ categories_df.rename(columns={'PRODUCT_CATEGORY': "CATEGORY"}, inplace=True)
 brand_categories_df = brand_category_df.merge(categories_df, on = 'CATEGORY', how = 'left')
 
 es = Elasticsearch("http://172.19.176.1:9200")
-st.write(es.info().body)
 
 mappings = {
         "properties":
