@@ -158,6 +158,9 @@ for entry in resp['hits']['hits']:
     if resp1['hits']['total']['value'] > 0:
         valid_entries.append(entry)
 
+if len(valid_entries) == 0:
+    st.write("Oops, No Offers Found!")
+  
 for i, entry in enumerate(valid_entries):
     st.write(i+1, entry["_source"]["OFFER"])
     st.write("Available at", entry["_source"]["RETAILER"])
